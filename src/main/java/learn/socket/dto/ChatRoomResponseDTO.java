@@ -1,6 +1,7 @@
 package learn.socket.dto;
 
 import learn.socket.entity.ChatRoom;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,10 +16,18 @@ public class ChatRoomResponseDTO {
     private String createdDate;
     private String updatedDate;
 
-    public ChatRoomResponseDTO(ChatRoom room) {
-        this.id = room.getId();
-        this.roomName = room.getRoomName();
-        this.createdDate = room.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
-        this.updatedDate = room.getUpdatedTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    @Builder
+    public ChatRoomResponseDTO(ChatRoom entity) {
+        this.id = entity.getId();
+        this.roomName = entity.getRoomName();
+        this.createdDate = entity.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+        this.updatedDate = entity.getUpdatedTime().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"));
+    }
+
+    public static ChatRoomResponseDTO from(ChatRoom entity){
+
+        return ChatRoomResponseDTO.builder()
+                .entity(entity)
+                .build();
     }
 }
