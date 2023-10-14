@@ -1,0 +1,17 @@
+#spring:
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        format_sql: true # query문 구조를 갖춰서 출력
+#        default_batch_fetch_size: 500 # 일대다 컬렉션 조회 시 성능 최적화
+#    database: mysql
+#    show-sql: true
+#    open-in-view: true # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url:
+#    username:
+#    password:
