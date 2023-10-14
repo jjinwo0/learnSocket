@@ -1,5 +1,6 @@
 package learn.socket.entity;
 
+import learn.socket.dto.ChatRoomDTO;
 import learn.socket.util.BaseTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,8 +27,8 @@ public class ChatRoom extends BaseTime {
         this.roomName = roomName;
     }
 
-    public Long update(ChatRoomRequestDto requestDto) {
-        this.roomName = requestDto.getRoomName();
+    public Long update(ChatRoomDTO dto) {
+        this.roomName = dto.getRoomName();
         return this.id;
     }
 }
