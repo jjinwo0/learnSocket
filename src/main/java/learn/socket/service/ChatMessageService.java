@@ -4,8 +4,10 @@ import learn.socket.dto.ChatMessageDTO;
 import learn.socket.dto.ChatMessageResponseDTO;
 import learn.socket.entity.ChatMessage;
 import learn.socket.entity.ChatRoom;
+import learn.socket.entity.Member;
 import learn.socket.repository.ChatMessageRepository;
 import learn.socket.repository.ChatRoomRepository;
+import learn.socket.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class ChatMessageService {
 
 
+    private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
 
@@ -51,11 +54,15 @@ public class ChatMessageService {
      *  ChatMessage 생성
      */
     @Transactional
-    public Long save(final Long chatRoomId, final ChatMessageDTO requestDto) {
+    public Long save(Long memberId, Long chatRoomId, ChatMessageDTO requestDto) {
+
+        Member findMember = memberRepository.findById(memberId).orElseThrow(
+                () -> new IllegalArgumentException("해당 Member가 존재하지 않습니다. memberId = " + memberId));
 
         ChatRoom findChatMessage = this.chatRoomRepository.findById(chatRoomId).orElseThrow(
                 () -> new IllegalArgumentException("해당 ChatRoom이 존재하지 않습니다. chatRoomId = " + chatRoomId));
 
+        requestDto.setSender(findMember.getUsername());
         requestDto.setChatRoom(findChatMessage);
 
         return chatMessageRepository.save(requestDto.toEntity()).getId();
